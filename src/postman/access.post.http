@@ -1,0 +1,5 @@
+POST http://localhost:3052/v1/api/shop/signUp
+
+
+# @url_dev  = "http://localhost:3052/v1/api/"
+# POST {{url_dev}}shop/signUp

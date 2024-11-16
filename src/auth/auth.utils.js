@@ -4,12 +4,12 @@ const createTokenPair = async (payload,  publicKey, privateKey) =>{
     try{
         // access token
         const accessToken = await Jwt.sign(payload, privateKey , {
-            algorithm: 'RS256',
+            // algorithm: 'RS256',
             expiresIn: '2 days',
         })
 
         const refreshToken = await Jwt.sign(payload, privateKey, {
-            algorithm: 'RS256',
+            // algorithm: 'RS256',
             expiresIn: '7 days',
         })
 
@@ -32,5 +32,4 @@ const createTokenPair = async (payload,  publicKey, privateKey) =>{
 
 module.exports = {
     createTokenPair,
-
 }

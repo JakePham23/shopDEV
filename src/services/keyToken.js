@@ -3,17 +3,17 @@
 const keyTokenModel = require('../models/keyToken.model')
 // không lấy token trong access service
 class KeyToken {
-    static createKeyToken = async ({userId, publicKey}) => {
+    static createKeyToken = async ({userId, publicKey, privateKey}) => {
         try {
-            const publicKeyString = publicKey.toString()
-            const keyToken = await keyTokenModel.create({
+
+            const tokens = await keyTokenModel.create({
                 user: userId,
-                publicKey
-            });
-            // return tokens ? tokens.publicKeyString : null;
-            return publicKeyString
+                publicKey,
+                privateKey
+            })
+            return tokens ? tokens.publicKey: null
         } catch (error) {
-            return null;
+            return error;
         }
     }
 }

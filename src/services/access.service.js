@@ -37,40 +37,46 @@ class AccessService {
 
             if (newShop) {
                 // Generate the RSA key pair
-                const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-                    modulusLength: 4096,
-                    publicKeyEncoding: {
-                        type: 'pkcs1',
-                        format: 'pem',
-                    },
-                    privateKeyEncoding: {
-                        type: 'pkcs1',
-                        format: 'pem',
-                    }
-                });
+                // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
+                //     modulusLength: 4096,
+                //     publicKeyEncoding: {
+                //         type: 'pkcs1',
+                //         format: 'pem',
+                //     },
+                //     privateKeyEncoding: {
+                //         type: 'pkcs1',
+                //         format: 'pem',
+                //     }
+                // });
+                //
+
+                // another
+                // const privateKey = crypto.getRandomValues(64).toString('hex')
+                // const publicKey = crypto.getRandomValues(64).toString('hex')
+                const privateKey = crypto.randomBytes(64).toString('hex');
+                const publicKey = crypto.randomBytes(64).toString('hex');
 
                 // Create the public key token for the shop
-                const publickeyString = await KeyTokenService.createKeyToken({
+                const keyStore = await KeyTokenService.createKeyToken({
                     userID: newShop._id,
-                    publicKey
+                    publicKey,
+                    privateKey
+
                 });
 
-                if (!publickeyString) {
+                if (!keyStore) {
                     console.error('Error generating public key string'); // Debugging log
                     return {
                         code: '20002',
-                        message: 'Error when creating public key',
+                        message: 'Key store error',
                         status: 'error'
                     };
                 }
 
-
-                // Create the JWT tokens (public and private keys are passed to create the pair)
-                const publicKeyObject = crypto.createPublicKey(publickeyString);
                 const tokens = await createTokenPair({
                     userID: newShop._id,
                     email: newShop.email
-                }, publickeyString, privateKey);
+                }, publicKey, privateKey);
 
                 console.log('Created tokens successfully:', tokens);
 

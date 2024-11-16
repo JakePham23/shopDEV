@@ -1,5 +1,8 @@
 POST http://localhost:3052/v1/api/shop/signUp
+Content-Type: application/json
 
-
-# @url_dev  = "http://localhost:3052/v1/api/"
-# POST {{url_dev}}shop/signUp
+{
+    "username": "testuser23341",
+    "email": "testuser6@example.com",
+    "password": "securepassword"
+}

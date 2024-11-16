@@ -19,6 +19,15 @@ require('./dbs/init.mongodb')
 // init routes
 app.use('/', require('./routes/index'))
 //handle error
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);  // Log the error stack for debugging
+    res.status(500).json({
+        code: '500',
+        message: 'Something went wrong!',
+        error: err.message,
+    });
+});
 
 
 module.exports = app
